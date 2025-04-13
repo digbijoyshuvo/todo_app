@@ -1,0 +1,25 @@
+
+import 'package:go_router/go_router.dart';
+import 'package:todo_app/auth/login_view.dart';
+import 'package:todo_app/auth/register_view.dart';
+import 'package:todo_app/routes/route_names.dart';
+
+import '../features/splash_view.dart';
+
+final GoRouter router = GoRouter(routes:[
+  GoRoute(
+    name: RouteNames.splash,
+    path:"/",
+    builder: (context,state) => const SplashView(),
+  ),
+  GoRoute(
+    name: RouteNames.register,
+    path:"/register",
+    builder: (context,state) => const RegisterView(),
+  ),
+  GoRoute(
+    name: RouteNames.login,
+    path:"/login",
+    builder: (context,state) => const LoginView(),
+  ),
+]);
