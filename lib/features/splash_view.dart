@@ -10,13 +10,22 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  // @override
+  // void initState() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     context.pushReplacementNamed(RouteNames.checkUserAuth);
+  //   });
+  //   super.initState();
+  // }
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.pushNamed(RouteNames.login);
-    });
     super.initState();
+    // Delay for 2 seconds before navigating
+    Future.delayed(const Duration(seconds: 2), () {
+      context.pushReplacementNamed(RouteNames.checkUserAuth);
+    });
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

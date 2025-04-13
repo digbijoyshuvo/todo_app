@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_app/database/auth.dart';
 import 'package:todo_app/routes/route_names.dart';
 import 'package:todo_app/theme/app_color.dart';
 import 'package:todo_app/utils/validation_rule.dart';
+import 'package:todo_app/widgets/custom_snack_bar.dart';
 import 'package:todo_app/widgets/custom_text_form_field.dart';
 import 'package:todo_app/widgets/elevated_button.dart';
 
@@ -84,7 +86,19 @@ class _LoginViewState extends State<LoginView> {
                     SizedBox(height: 20,),
                     RoundedElevatedButton(
                         buttonText: "Login",
-                        onPressed: (){}
+                        onPressed: (){
+                          loginUser(
+                              _emailController.text,
+                              _passwordController.text
+                          ).then((value){
+                            if(value=="success") {
+                              context.pushReplacementNamed(RouteNames.todo);
+                              CustomSnackBar.showSuccess(context, "Login Successful");
+                            }else{
+                              CustomSnackBar.showError(context, value);
+                            }
+                          });
+                        }
                     ),
                     SizedBox(height: 10,),
                     GestureDetector(

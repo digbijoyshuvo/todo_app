@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_app/database/auth.dart';
+import 'package:todo_app/routes/route_names.dart';
+import 'package:todo_app/widgets/custom_snack_bar.dart';
 import 'package:todo_app/widgets/elevated_button.dart';
 
 import '../utils/validation_rule.dart';
@@ -12,16 +16,14 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  final TextEditingController _firstNameController =TextEditingController();
-  final TextEditingController _lastNameController =TextEditingController();
+  final TextEditingController _nameController =TextEditingController();
   final TextEditingController _emailController =TextEditingController();
   final TextEditingController _passwordController =TextEditingController();
   bool isPasswordVisible=false;
 
   @override
   void dispose(){
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -44,7 +46,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       SizedBox(height: 16,),
                       CustomTextFormField(
-                        controller: _firstNameController,
+                        controller: _nameController,
                         validator: (val){
                           if(val!.isEmpty){
                             return " Please enter your name";
@@ -54,21 +56,6 @@ class _RegisterViewState extends State<RegisterView> {
                         keyboardType: TextInputType.name,
                         obscureText: false,
                         hintText: "Enter Your first name",
-                        suffix: null,
-                        prefixIcon: Icon(Icons.person),
-                      ),
-                      SizedBox(height: 10,),
-                      CustomTextFormField(
-                        controller: _lastNameController,
-                        validator: (val){
-                          if(val!.isEmpty){
-                            return " Please enter your name";
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.name,
-                        obscureText: false,
-                        hintText: "Enter Your last name",
                         suffix: null,
                         prefixIcon: Icon(Icons.person),
                       ),
@@ -118,6 +105,18 @@ class _RegisterViewState extends State<RegisterView> {
                       RoundedElevatedButton(
                           buttonText: "Register",
                           onPressed: (){
+                            createUser(
+                              _nameController.text,
+                              _emailController.text,
+                              _passwordController.text
+                            ).then((value){
+                              if(value=="success"){
+                                context.pushReplacementNamed(RouteNames.login);
+                                CustomSnackBar.showSuccess(context, "Account Created");
+                              }else{
+                                CustomSnackBar.showInfo(context, value);
+                              }
+                            });
                           })
                     ],
                   ) ) ,
