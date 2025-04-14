@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
       context.pushReplacementNamed(RouteNames.checkUserAuth);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

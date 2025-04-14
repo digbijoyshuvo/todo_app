@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_app/auth/login_view.dart';
 import 'package:todo_app/auth/register_view.dart';
 import 'package:todo_app/database/checkUserSession.dart';
+import 'package:todo_app/features/todoPage/add_todo_view.dart';
 import 'package:todo_app/features/todoPage/todo_page.dart';
 import 'package:todo_app/routes/route_names.dart';
 
@@ -33,5 +34,10 @@ final GoRouter router = GoRouter(routes:[
     name: RouteNames.checkUserAuth,
     path:"/checkUserAuth",
     builder: (context,state) => const CheckUserSession(),
+  ),
+  GoRoute(
+    name: RouteNames.addTodo,
+    path:"/addTodo",
+    builder: (context,state) => const AddTodoView(),
   ),
 ]);
