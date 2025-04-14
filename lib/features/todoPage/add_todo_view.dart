@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/database/todo_provider.dart';
+import 'package:todo_app/widgets/custom_snack_bar.dart';
 import 'package:todo_app/widgets/custom_text_form_field.dart';
 import 'package:todo_app/widgets/elevated_button.dart';
 
@@ -33,6 +36,7 @@ bool isCompleted = false;
 
   @override
   Widget build(BuildContext context) {
+   TodoProvider provider = Provider.of<TodoProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -78,6 +82,11 @@ bool isCompleted = false;
           RoundedElevatedButton(
               buttonText: "Add Todo",
               onPressed: (){
+                provider.createNewTodo(
+                    _titleController.text,
+                    _descriptionController.text);
+                CustomSnackBar.showSuccess(context, "Todo Added Successfully");
+                Navigator.pop(context);
               }
           ),
         ],
