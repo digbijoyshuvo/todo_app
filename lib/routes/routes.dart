@@ -1,4 +1,5 @@
 
+import 'package:appwrite/models.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/auth/login_view.dart';
 import 'package:todo_app/auth/register_view.dart';
@@ -8,6 +9,7 @@ import 'package:todo_app/features/todoPage/todo_page.dart';
 import 'package:todo_app/routes/route_names.dart';
 
 import '../features/splash_view.dart';
+import '../features/todoPage/edit_todo_view.dart';
 
 final GoRouter router = GoRouter(routes:[
   GoRoute(
@@ -40,4 +42,14 @@ final GoRouter router = GoRouter(routes:[
     path:"/addTodo",
     builder: (context,state) => const AddTodoView(),
   ),
+  GoRoute(
+    name: RouteNames.editTodo,
+    path:"/editTodo",
+    builder: (context,state){
+      final todo =state.extra as Document;
+      return EditTodoView(todo : todo);
+
+    },
+  ),
+
 ]);

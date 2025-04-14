@@ -5,5 +5,6 @@ class RouteNames{
   static const todo = "todo";
   static const checkUserAuth = "checkUserAuth";
   static const addTodo = "addTodo";
+  static const editTodo = "editTodo";
 
 }

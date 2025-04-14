@@ -69,4 +69,21 @@ Future markCompleted(String id, bool isCompleted )async{
     notifyListeners();
 }
 
+
+// Update the whole todo
+Future updateTodo(String title, String desc, String id)async{
+  final data = await databases.updateDocument(
+      databaseId: databaseId,
+      collectionId: collectionId,
+      documentId: id,
+    data: {
+     "title" : title,
+     "description" : desc,
+    });
+  print("Todo Modified");
+
+  getAllTodo();
+  notifyListeners();
+}
+
 }

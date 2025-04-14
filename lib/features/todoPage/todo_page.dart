@@ -38,12 +38,16 @@ class _TodoPageState extends State<TodoPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     child: ListTile(
+                      onTap: (){
+                       context.pushNamed(RouteNames.editTodo,
+                       extra: provider.allTodos[index]);
+                      },
                       leading: Checkbox(
-                          fillColor: WidgetStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                          fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
                             if (states.contains(WidgetState.selected)) {
                               return Colors.green;
                             }
-                            return Colors.redAccent;
+                            return Colors.red;
                           }),
                           value: provider.allTodos[index].data["isCompleted"]??false,
                           onChanged: (value){
