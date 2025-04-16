@@ -1,4 +1,5 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:todo_app/database/shared_preferences.dart';
 
 Client client = Client()
     .setEndpoint('https://cloud.appwrite.io/v1')
@@ -38,6 +39,7 @@ Future<String> loginUser(String email, String password)async{
        final user = await account.createEmailPasswordSession(
            email: email,
            password: password);
+       await UserSavedData.saveEmail(email);
        print("User Logged In");
        return "success";
    }on AppwriteException catch(ex){

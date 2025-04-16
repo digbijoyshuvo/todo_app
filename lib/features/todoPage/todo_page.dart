@@ -15,6 +15,7 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +32,19 @@ class _TodoPageState extends State<TodoPage> {
       ),
       body: Consumer(
           builder: (context, TodoProvider provider ,chile){
-            return ListView.builder(
+            return provider.checkLoading?
+                Center(child: CircularProgressIndicator()):
+              provider.allTodos.isEmpty
+                ?Center(
+              child: Text("No Todos Created",
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: Colors.grey),),
+            ):ListView.builder(
               itemCount: provider.allTodos.length,
               itemBuilder: (context,index){
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
+                    color: Colors.black,
                     child: ListTile(
                       onTap: (){
                        context.pushNamed(RouteNames.editTodo,
@@ -55,8 +63,13 @@ class _TodoPageState extends State<TodoPage> {
                                 !provider.allTodos[index].data["isCompleted"]);
                           }
                       ),
-                      title: Text(provider.allTodos[index].data['title']),
-                      subtitle: Text(provider.allTodos[index].data['description']),
+                      title: Text(provider.allTodos[index].data['title'],style: TextStyle(color: Colors.lightGreen,fontSize: 20,fontWeight: FontWeight.w500),),
+                      subtitle: Text(provider.allTodos[index].data['description'],style: TextStyle(fontSize: 15),),
+                      trailing: IconButton(
+                          onPressed: (){
+                            provider.deleteTodo(provider.allTodos[index].$id);
+                          },
+                          icon: Icon(Icons.delete,color: Colors.red,)),
                     ),
                   ),
                 );
@@ -64,6 +77,16 @@ class _TodoPageState extends State<TodoPage> {
             );
           }
       ),
+      bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _selectedIndex,
+        onTap: (value) =>
+        setState(() {
+          _selectedIndex = value;
+        }),
+        items: [
+        BottomNavigationBarItem(icon: Icon(Icons.list),label: "Todo List"),
+        BottomNavigationBarItem(icon: Icon(Icons.done),label: "Completed"),
+      ],backgroundColor: AppColor.appBarColor,),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
             context.pushNamed(RouteNames.addTodo);

@@ -1,10 +1,13 @@
  import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/database/shared_preferences.dart';
 import 'package:todo_app/database/todo_provider.dart';
 import 'package:todo_app/routes/routes.dart';
 import 'package:todo_app/theme/app_theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  UserSavedData.init();
   runApp(const MyApp());
 }
 
